@@ -2,16 +2,20 @@ require 'csv'
 require_relative '../app'
 
 class SunlightLegislatorsImporter
+
   def self.import(filename)
     csv = CSV.new(File.open(filename), :headers => true)
     csv.each do |row|
+      hash = {}
       row.each do |field, value|
-
-        Legislator.create field.to_sym => value
+        #Legislator.create(row.to_hash)
+        hash[field] = value
         # byebug
         # raise NotImplementedError, "TODO: figure out what to do with this row and do it!"
         # TODO: end
       end
+
+      Legislator.create(hash)
     end
   end
 end
