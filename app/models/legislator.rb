@@ -3,9 +3,10 @@ require_relative '../../db/config'
 
 class Legislator < ActiveRecord::Base
 
+  def self.bystate(state, title)
 
-  def self.find(id)
-    self.find(id)
+    self.where(state: state, title: title).limit(2)
+
   end
 
 # attr_accessor :first_name, :last_name, :birthday
