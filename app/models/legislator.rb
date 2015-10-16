@@ -1,7 +1,14 @@
 
 require_relative '../../db/config'
+require 'byebug'
 
 class Legislator < ActiveRecord::Base
+
+  def self.check(term, arg)
+
+    self.where("#{term} = ?", arg)
+
+  end
 
   def self.bystate(state, title)
 
@@ -9,6 +16,34 @@ class Legislator < ActiveRecord::Base
 
   end
 
+  def self.list(term1, term2, arg)
+
+     self.where(["#{term1} = ? and #{term2} = ?", arg[0], arg[1]])
+
+  end
+
+  def self.list(term1, term2, term3, arg)
+
+      a = self.where(["#{term1} = ? and #{term2} = ? and #{term3}=?", arg[0], arg[1],arg[2]])
+
+      a.all.each do |x|
+       puts x.party + " " + x.title + " " + x.in_office
+       end
+  end
+
+  def self.at_office?(term, arg)
+
+      a = self.where("#{term}=?", arg).sample
+
+      if a.in_office == "1"
+        puts "#{a.firstname} is in office"
+        return true
+      else
+        puts "#{a.firstname} is out"
+        return false
+      end
+
+  end
 # attr_accessor :first_name, :last_name, :birthday
 
   # validates :email, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/, :message => "error"}
@@ -32,4 +67,5 @@ class Legislator < ActiveRecord::Base
   #   return age
   # end
 # implement your Student model here
+
 end
