@@ -7,8 +7,8 @@ describe "create table with correct schema" do
     raise RuntimeError, "be sure to run 'rake db:migrate' before running these specs" unless ActiveRecord::Migrator.current_version > 0
   end
 
-  it "should have a Senators table" do
-    expect(ActiveRecord::Base.connection.table_exists?(:senators)).to eq(true)
+  it "should have a Legislators table" do
+    expect(ActiveRecord::Base.connection.table_exists?(:legislators)).to eq(true)
   end
 
   it "should have the right columns and types" do
@@ -19,7 +19,7 @@ describe "create table with correct schema" do
       :datetime => ["created_at", "updated_at"]
     }
 
-    ActiveRecord::Base.connection.columns(:senators).each do |col|
+    ActiveRecord::Base.connection.columns(:legislators).each do |col|
       expect(expected[col.type].include?(col.name)).to eq(true)
     end
   end
